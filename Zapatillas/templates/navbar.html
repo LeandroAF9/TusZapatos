@@ -1,0 +1,28 @@
+<!-- templates/navbar.html -->
+<header>
+    <div class="navbar">
+      <div class="logo"><a href="#">Tus ZapaTos</a></div>
+      <ul>
+        <li class="dropdown">
+          <a href="#">Productos</a>
+          <div class="dropdown-content">
+            <a href="{{ url_for('zapatos_mujer') }}">Mujer</a>
+            <a href="{{ url_for('zapatos_hombre') }}">Hombre</a>
+            <a href="{{ url_for('zapatos_niño') }}">Niño</a>
+            <a href="{{ url_for('zapatos_niña') }}">Niña</a>
+          </div>
+        </li>
+        <li><a href="#ofertas">Ofertas</a></li>
+        <li><a href="#nuestraHistoria">Nuestra Historia</a></li>
+        <li><a href="{{ url_for('login') }}">Ingresa!</a></li>
+        <li class="icons">
+          <a href="{{ url_for('cr') }}" class="icon shopping-cart"><i class="fa fa-shopping-cart"></i></a>
+          <a href="/favoritos" class="icon heart"><i class="fa fa-heart"></i></a>
+        </li>
+      </ul>
+      <div class="toggle_btn">
+        <i class="fa fa-bars"></i>
+      </div>
+    </div>
+  </header>
+  

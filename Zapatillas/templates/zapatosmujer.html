@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Tus ZapaTos - Mujer</title>
+</head>
+<body>
+    {% block content %}
+    {% include 'navbar.html' %}
+    {% include 'sliderM.html' %}
+
+    <section id="ofertas" class="offers">
+        <h1><span>Calzado - Mujer</span></h1>
+        <div class="container">
+          <div class="card__container">
+            <!-- Iteración de productos para mostrar -->
+            {% for producto in productos %}
+            <article class="card__article">
+              <img src="{{ producto[7] }}" alt="{{ producto[1] }}" class="card__img"> <!-- Usa el índice correcto para la columna imagen -->
+              <div class="card__data">
+                <span class="card__description">{{ producto[2] }}</span> <!-- Índice correcto para la descripción -->
+                <h2 class="card__title">{{ producto[1] }}</h2> <!-- Índice correcto para el nombre -->
+                <a href="#" class="card__button" data-id="{{ producto[0] }}" data-name="{{ producto[1] }}" data-price="{{ producto[3] }}">Compra ahora</a>
+              </div>
+            </article>
+            {% endfor %}
+            
+
+          </div>
+        </div>
+    </section>
+    {% endblock %}
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Carrito de Compras</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <br>
+    <br>
+    <br>
+    <div class="shopping-cart-container">
+        <h1>Carrito de Compras</h1>
+        
+        <div class="cart-item">
+            <img src="{{ item.image_url }}" alt="Product Image" class="product-image">
+            <div class="product-details">
+                <h2>{{ item.product_name }}</h2>
+                <p>Tamaño: {{ item.size }}</p>
+                <p>Color: {{ item.color }}</p>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="updateQuantity(0, -1)">-</button>
+                    <input type="text" value="{{ item.quantity }}" class="quantity-input" readonly>
+                    <button class="quantity-btn" onclick="updateQuantity(0, -1)">+</button>
+                </div>
+                <p class="price" id="price-{{ loop.index0 }}"></p>
+                <button class="remove-item-btn" onclick="updateQuantity(0, -1)">Eliminar</button>
+            </div> <!-- Aquí se cierra .product-details -->
+        </div> <!-- Aquí se cierra .cart-item -->
+        
+        
+        <div class="cart-summary">
+            <p>Total: <span class="total-price">${{ total_price }}</span></p>
+            <button class="checkout-btn" onclick="checkout()" {% if not cart %}disabled{% endif %}>Finalizar Compra</button>
+        </div>
+    </div>
+
+    <script>
+        function updateQuantity(index, change) {
+            fetch(`/update_quantity/${index}/${change}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Error al actualizar la cantidad.');
+                }
+            });
+        }
+
+        function removeItem(index) {
+            fetch(`/remove_item/${index}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Error al eliminar el producto.');
+                }
+            });
+        }
+
+        function checkout() {
+            fetch('/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/success';
+                } else {
+                    alert('Error al procesar la compra.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
